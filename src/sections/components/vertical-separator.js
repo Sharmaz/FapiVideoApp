@@ -7,6 +7,7 @@ const VerticalSeparator = (props) => (
   <View style={[
     styles.container,
     {
+      // Color opcional por props
       borderTopColor: (props.color) ? props.color : '#eaeaea'
     }
     ]}>
