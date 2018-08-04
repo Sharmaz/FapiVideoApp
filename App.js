@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import API from './utils/api';
 
@@ -7,6 +7,7 @@ import Home from './src/screens/containers/home';
 import Header from './src/sections/components/header';
 import SuggestionList from './src/videos/containers/suggestion-list';
 import CategoryList from './src/videos/containers/category-list';
+import Player from './src/player/containers/player';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -36,6 +37,7 @@ export default class App extends Component<Props> {
       <Home>
         <Header />
         <Text>Buscador</Text>
+        <Player />
         <CategoryList
           list={this.state.categoriesList}
         />
