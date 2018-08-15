@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import store from './store';
+import { store, persistor } from './store';
 import API from './utils/api';
 
 import Home from './src/screens/containers/home';
@@ -10,6 +11,7 @@ import Header from './src/sections/components/header';
 import SuggestionList from './src/videos/containers/suggestion-list';
 import CategoryList from './src/videos/containers/category-list';
 import Player from './src/player/containers/player';
+import Loading from './src/sections/components/loading';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -41,13 +43,18 @@ export default class App extends Component<Props> {
   render() {
     return (
       <Provider store={store}>
-        <Home>
-          <Header />
-          <Text>Buscador</Text>
-          <Player />
-          <CategoryList />
-          <SuggestionList />
-        </Home>
+        <PersistGate
+          loading={<Loading />}
+          persistor={persistor}
+        >
+          <Home>
+            <Header />
+            <Text>Buscador</Text>
+            <Player />
+            <CategoryList />
+            <SuggestionList />
+          </Home>
+        </PersistGate>
       </Provider>
     );
   }

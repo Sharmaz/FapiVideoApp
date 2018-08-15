@@ -1,10 +1,29 @@
 import { createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import reducer from './reducers/videos';
 
 // Creamos el Store, le pasamos los reducres y un estado inicial (las listas)
-const store = createStore(reducer, {
+/* const store = createStore(reducer, {
   suggestionList: [],
   categoryList: []
 });
+*/ 
 
-export default store;
+// Configuración de persistencia, storage usa webstorage o asyncstorage
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+// Persistimos los reducers pasando la configuración y los reducers
+const persistedReducer = persistReducer(persistConfig, reducer)
+
+// Creamos el Store a partir de los reducers persistidos
+const store = createStore(persistedReducer)
+
+// Persistimos el Store
+const persistor = persistStore(store)
+
+export { store, persistor };
