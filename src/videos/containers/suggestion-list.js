@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { 
-  FlatList,
-  Text
+  FlatList
 } from 'react-native';
+import { connect } from 'react-redux';
+
 import Layout from '../components/suggestion-list-layout';
 import Empty from '../components/suggestions-empty';
 import Separator from '../../sections/components/vertical-separator';
@@ -51,4 +52,12 @@ class SuggestionList extends Component {
   }
 }
 
-export default SuggestionList;
+// Traemos la lista de sugerencias del estado y las retornamos como props
+function mapStateToProps (state) {
+  return {
+    list: state.suggestionList
+  }
+}
+
+// Al exportar conectamos el Store con el componente
+export default connect(mapStateToProps)(SuggestionList);

@@ -14,7 +14,7 @@ const Category = (props) => (
       uri: props.background_image
     }}
   >
-    <Text style={styles.genre}>{props.genres[0]}</Text>
+    <Text style={styles.genre}>{props.genres ? props.genres[0] : 'Sin categoría'}</Text>
   </ImageBackground>
 );
 

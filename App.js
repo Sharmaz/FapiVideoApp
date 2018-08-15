@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
+import { Provider } from 'react-redux';
 
+import store from './store';
 import API from './utils/api';
 
 import Home from './src/screens/containers/home';
@@ -11,40 +13,42 @@ import Player from './src/player/containers/player';
 
 type Props = {};
 export default class App extends Component<Props> {
-  state = {
-    // Seteamos una lista vacia para las sugerencias y categorías a pasar por props
-    suggestionList: [],
-    categoriesList: []
-  }
-
-  // Hacemos asincrono el metodo componentDidMount
+ 
+ // Hacemos asincrono el metodo componentDidMount
   async componentDidMount() {
     // Hardcodeamos con Id 10 un array de sugerencias
-    const movies = await API.getSuggestion(10);
+    const suggestionList = await API.getSuggestion(10);
+    
+    // Con el metodo dispatch del store creamos la acción de sugerencias
+    store.dispatch({
+      type: 'SET_SUGGESTION_LIST',
+      payload: {
+        suggestionList
+      }
+    });
 
     // Obtenemos las peliculas para las categorías
-    const categories = await API.getMovies();
-    
-    // A los arrays vacios les agregamos el array que nos llega del API
-    this.setState({
-      suggestionList: movies,
-      categoriesList: categories
+    const categoryList = await API.getMovies();
+
+    // Con el metodo dispatch del store creamos la acción de las categorías
+    store.dispatch({
+      type: 'SET_CATEGORY_LIST',
+      payload: {
+        categoryList
+      }
     });
-    console.log(this.state.categoriesList);
   }
   render() {
     return (
-      <Home>
-        <Header />
-        <Text>Buscador</Text>
-        <Player />
-        <CategoryList
-          list={this.state.categoriesList}
-        />
-        <SuggestionList
-          list={this.state.suggestionList}
-        />
-      </Home>
+      <Provider store={store}>
+        <Home>
+          <Header />
+          <Text>Buscador</Text>
+          <Player />
+          <CategoryList />
+          <SuggestionList />
+        </Home>
+      </Provider>
     );
   }
 }

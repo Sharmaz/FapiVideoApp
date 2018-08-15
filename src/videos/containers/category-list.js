@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   FlatList
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import Empty from '../components/suggestions-empty';
 import Category from '../components/category';
@@ -45,4 +46,12 @@ class CategoryList extends Component {
   }
 }
 
-export default CategoryList;
+// Traemos la lista de categorías del estado y las retornamos como props
+function mapStateToProps(state) {
+  return {
+    list: state.categoryList
+  }
+}
+
+// Al exportar conectamos el Store con el componente
+export default connect(mapStateToProps)(CategoryList);
