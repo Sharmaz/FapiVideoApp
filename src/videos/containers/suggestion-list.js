@@ -19,12 +19,28 @@ class SuggestionList extends Component {
     <Separator/>
   )
   renderItem = ({item}) => (
-    // Rendereamos in item de la lista en el componente Suggestion
-    <Suggestion {...item}/>
+    /**
+     * Rendereamos in item de la lista en el componente Suggestion
+     * Y pasamos por prop una función con la función viewMovie pasandole item
+     */
+    <Suggestion
+      {...item}
+      onPress={() => { this.viewMovie(item) }}
+    />
   )
   keyExtractor = (item) => {
     // Devolvemos el id del item como un String para usarlo como Key
     return item.id.toString();
+  }
+
+  viewMovie = (item) => {
+    // creamos una acción para setear la sugerencia seleccionada
+    this.props.dispatch({
+      type: 'SET_SELECTED_MOVIE',
+      payload: {
+        movie: item,
+      }
+    });
   }
 
   render() {

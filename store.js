@@ -11,10 +11,14 @@ import reducer from './reducers/videos';
 });
 */ 
 
-// Configuración de persistencia, storage usa webstorage o asyncstorage
+/**
+ * Configuración de persistencia, storage usa webstorage o asyncstorage
+ * En blacklist le seteamos que propiedad del Store no queremos persistir
+ */
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['selectedMovie']
 }
 
 // Persistimos los reducers pasando la configuración y los reducers
